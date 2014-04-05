@@ -1,0 +1,10 @@
+#sider{
+    float:left;
+    width:400px;
+    min-height:400px;
+}
+
+#center{
+    float:left;
+    margin-left: 10px;
+}
