@@ -462,12 +462,35 @@ var glbuffer = {
                 glinfo.previous_x = current_x;
                 glinfo.previous_y = current_y;
             } else {
-                var deltaX = current_x - glinfo.previous_x;
+                 var motionXY = Math.sqrt(Math.pow(current_x - glinfo.previous_x, 2) + Math.pow(current_y - glinfo.previous_y, 2));
+                var cosCamera = sw_config.camera[0] / Math.sqrt(Math.pow(sw_config.camera[0], 2) + Math.pow(sw_config.camera[1], 2) + Math.pow(sw_config.camera[2], 2))
+                var sinCamera = sw_config.camera[1] / Math.sqrt(Math.pow(sw_config.camera[0], 2) + Math.pow(sw_config.camera[1], 2) + Math.pow(sw_config.camera[2], 2))
+
+
+                if (cosCamera >= 0 && sinCamera >= 0) {
+                    var deltaX = (current_x - glinfo.previous_x) * (sinCamera) - (current_y - glinfo.previous_y) * (cosCamera);
+                    var deltaY = (current_y - glinfo.previous_y) * (sinCamera) + (current_x - glinfo.previous_x) * (cosCamera);
+                } else if (cosCamera >= 0 && sinCamera < 0) {
+
+                    var deltaX = (current_x - glinfo.previous_x) * (sinCamera) - (current_y - glinfo.previous_y) * (cosCamera);
+                    var deltaY = (current_y - glinfo.previous_y) * (sinCamera) + (current_x - glinfo.previous_x) * (cosCamera);
+                    
+                } else if (cosCamera < 0 && sinCamera >= 0) {
+
+                    var deltaX = (current_x - glinfo.previous_x) * (sinCamera) - (current_y - glinfo.previous_y) * (cosCamera);
+                    var deltaY = (current_y - glinfo.previous_y) * (sinCamera) + (current_x - glinfo.previous_x) * (cosCamera);
+                } else {
+
+                    var deltaX = (current_x - glinfo.previous_x) * (sinCamera) - (current_y - glinfo.previous_y) * (cosCamera);
+                    var deltaY = (current_y - glinfo.previous_y) * (sinCamera) + (current_x - glinfo.previous_x) * (cosCamera);
+                }
+
+                //var deltaX = current_x - glinfo.previous_x;
                 var newRotationMatrix = mat4.create();
                 mat4.identity(newRotationMatrix);
                 mat4.rotate(newRotationMatrix, degToRad(deltaX / 10), [0, -1, 0]);
 
-                var deltaY = current_y - glinfo.previous_y;
+                //var deltaY = current_y - glinfo.previous_y;
                 mat4.rotate(newRotationMatrix, degToRad(deltaY / 10), [-1, 0, 0]);
                 mat4.multiply(newRotationMatrix, gl_uMatrix.rotationMatrix, gl_uMatrix.rotationMatrix);
 
@@ -481,8 +504,6 @@ var glbuffer = {
                 glinfo.previous_x = current_x;
                 glinfo.previous_y = current_y;
             } else {
-                //                                var deltaX = (current_x - glinfo.previous_x);
-                //                                var deltaY = (current_y - glinfo.previous_y);
                 var motionXY = Math.sqrt(Math.pow(current_x - glinfo.previous_x, 2) + Math.pow(current_y - glinfo.previous_y, 2));
                 var cosCamera = sw_config.camera[0] / Math.sqrt(Math.pow(sw_config.camera[0], 2) + Math.pow(sw_config.camera[1], 2) + Math.pow(sw_config.camera[2], 2))
                 var sinCamera = sw_config.camera[1] / Math.sqrt(Math.pow(sw_config.camera[0], 2) + Math.pow(sw_config.camera[1], 2) + Math.pow(sw_config.camera[2], 2))
@@ -492,16 +513,17 @@ var glbuffer = {
                     var deltaY = (current_y - glinfo.previous_y) * (sinCamera) + (current_x - glinfo.previous_x) * (cosCamera);
                 } else if (cosCamera >= 0 && sinCamera < 0) {
 
-                    var deltaX = (current_x - glinfo.previous_x) * (sinCamera) + (current_y - glinfo.previous_y) * (sinCamera);
-                    var deltaY = -(current_y - glinfo.previous_y) * (cosCamera) + (current_x - glinfo.previous_x) * (cosCamera);
+                    var deltaX = (current_x - glinfo.previous_x) * (sinCamera) - (current_y - glinfo.previous_y) * (cosCamera);
+                    var deltaY = (current_y - glinfo.previous_y) * (sinCamera) + (current_x - glinfo.previous_x) * (cosCamera);
+                    
                 } else if (cosCamera < 0 && sinCamera >= 0) {
 
                     var deltaX = (current_x - glinfo.previous_x) * (sinCamera) - (current_y - glinfo.previous_y) * (cosCamera);
                     var deltaY = (current_y - glinfo.previous_y) * (sinCamera) + (current_x - glinfo.previous_x) * (cosCamera);
                 } else {
 
-                    var deltaX = (current_x - glinfo.previous_x) * (sinCamera) - (current_y - glinfo.previous_y) * (sinCamera);
-                    var deltaY = (current_y - glinfo.previous_y) * (cosCamera) + (current_x - glinfo.previous_x) * (cosCamera);
+                    var deltaX = (current_x - glinfo.previous_x) * (sinCamera) - (current_y - glinfo.previous_y) * (cosCamera);
+                    var deltaY = (current_y - glinfo.previous_y) * (sinCamera) + (current_x - glinfo.previous_x) * (cosCamera);
                 }
 
 
