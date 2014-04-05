@@ -1,10 +1,27 @@
-#sider{
-    float:left;
-    width:400px;
-    min-height:400px;
+
+#main {
+
+    height: 100%;
+
+    overflow: hidden;
+
 }
 
-#center{
-    float:left;
-    margin-left: 10px;
+#sider {
+
+    float: left;
+
+    width: 400px;
+    min-height: inherit;
+
+}
+
+#center {
+
+    float: left;
+
+    padding: 10px;
+
+    height: auto;
+    
 }

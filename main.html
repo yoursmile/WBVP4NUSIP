@@ -42,85 +42,98 @@
     </head>
     
     <body onconTextmenu=window.event.returnValue=false>
-        <div id="sider">
-            <div class="panel-group" id="accordion">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">图形选项</a>
-                        </h4>
-                    </div>
-                <div id="collapseOne" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                        <div>
-                            <label>
-                                背景颜色:
-                                <input type="text" id="color-picker" name="bg_color">
-                            </label>
-                            <label>
-                                背景透明:
-                                <input type="text" id="color-picker_a" name="bg_color_a">
-                            </label>
+        <div id="main">
+            <div id="sider">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">图形选项</a>
+                            </h4>
                         </div>
-                        <hr>
-                        <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default">
-                            <input type="checkbox" name="switch" value="texture"> 开启材质
-                            </label>
-                            <label class="btn btn-default">
-                            <input type="checkbox" name="switch" value="light"> 开启灯光
-                            </label>
-                            <label class="btn btn-default">
-                            <input type="checkbox" name="switch" value="reset_pos"> 重置位置
-                            </label>
-                        </div>
-                        <hr>
-                        <div>
-                            <label>
-                                摄像机坐标:
-                                <input type="text" id="camera">
-                            </label>
-                            <hr>
-                            <button type="button" id="camera_left" class="btn btn-default">向左旋转</button>
-                            <button type="button" id="camera_right" class="btn btn-default">向右旋转</button>
-                        </div>
-                    </div>
-                </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h4 class="panel-title">
-                        <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                            动画选项
-                        </a>
-                      </h4>
-                    </div>
-                    <div id="collapseTwo" class="panel-collapse collapse">
+                    <div id="collapseOne" class="panel-collapse collapse in">
                         <div class="panel-body">
-                        Anim pariatur cliche reprehenderit
+                            <div>
+                                <label>
+                                    背景颜色:
+                                    <input type="text" id="color-picker" name="bg_color">
+                                </label>
+                                <label>
+                                    背景透明:
+                                    <input type="text" id="color-picker_a" name="bg_color_a">
+                                </label>
+                            </div>
+                            <hr>
+                            <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-default">
+                                <input type="checkbox" name="switch" value="texture"> 开启材质
+                                </label>
+                                <label class="btn btn-default">
+                                <input type="checkbox" name="switch" value="light"> 开启灯光
+                                </label>
+                                <label class="btn btn-default">
+                                <input type="checkbox" name="switch" value="reset_pos"> 重置位置
+                                </label>
+                            </div>
+                            <hr>
+                            <div>
+                                <label>
+                                    摄像机坐标:
+                                    <input type="text" id="camera">
+                                </label>
+                                <hr>
+                                <button type="button" id="camera_left" class="btn btn-default">向左旋转</button>
+                                <button type="button" id="camera_right" class="btn btn-default">向右旋转</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h4 class="panel-title">
-                        <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                            配置选项
-                        </a>
-                      </h4>
                     </div>
-                    <div id="collapseThree" class="panel-collapse collapse">
-                      <div class="panel-body">
-                        Anim pariatur cliche reprehenderit
-                      </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h4 class="panel-title">
+                            <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                动画选项
+                            </a>
+                          </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse">
+                            <div class="panel-body">
+                            Anim pariatur cliche reprehenderit
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h4 class="panel-title">
+                            <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                配置选项
+                            </a>
+                          </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse">
+                          <div class="panel-body">
+                            Anim pariatur cliche reprehenderit
+                          </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div id="center">
+                <canvas id="canvas">
+                </canvas>
+            </div>
         </div>
-        <div id="center">
-            <canvas id="canvas" width="700" height="700">
-            </canvas>
-        </div>
+     <script> 
+            window.onload=window.onresize=function(){
+//                if((canvas.clientHeight != main.clientHeight) && (canvas.clientWidth != main.clientWidth - 420)){ document.getElementById("main").clientWidth-420) + "px";
+                    canvas.width = main.clientWidth-430;
+                    canvas.height = $(window).height()-30;
+                    gl.viewportWidth = canvas.width;
+                    gl.viewportHeight = canvas.height;                    
+                    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+//                }
+            }
+        </script>  
         <script type="text/javascript" src="main_webgl.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
     </body>
