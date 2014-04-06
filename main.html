@@ -2,7 +2,7 @@
 <html lang="zh">
     <head>
         <meta http-equiv="content-type" content="text/html;charset=utf-8">  
-        <title>webgl_chapter2_example1</title>
+        <title>WBVP</title>
         <script type="text/javascript" src="glMatrix.js"></script>
         <script type="text/javascript" src="jquery.js"></script>
         <script src="webgl-debug.js"></script>
@@ -72,7 +72,7 @@
                                 <input type="checkbox" name="switch" value="light"> 开启灯光
                                 </label>
                                 <label class="btn btn-default">
-                                <input type="checkbox" name="switch" value="reset_pos"> 重置位置
+                                <input type="checkbox" name="switch" value="reset_pos"> 重置并锁定
                                 </label>
                             </div>
                             <hr>
@@ -119,19 +119,17 @@
                 </div>
             </div>
             <div id="center">
-                <canvas id="canvas">
+                <canvas id="plottingCanvas"  height="500px" width="500px">
                 </canvas>
             </div>
         </div>
      <script> 
             window.onload=window.onresize=function(){
-//                if((canvas.clientHeight != main.clientHeight) && (canvas.clientWidth != main.clientWidth - 420)){ document.getElementById("main").clientWidth-420) + "px";
-                    canvas.width = main.clientWidth-430;
-                    canvas.height = $(window).height()-30;
-                    gl.viewportWidth = canvas.width;
-                    gl.viewportHeight = canvas.height;                    
-                    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-//                }
+                    plottingCanvas.width = main.clientWidth-420;
+                    plottingCanvas.height = $(window).height()-20;
+                    gl.viewportWidth = plottingCanvas.width;
+                    gl.viewportHeight = plottingCanvas.height;                    
+                    gl.viewport(0, 0, gl.plottingCanvas.width, gl.plottingCanvas.height);
             }
         </script>  
         <script type="text/javascript" src="main_webgl.js"></script>

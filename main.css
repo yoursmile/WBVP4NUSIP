@@ -12,7 +12,7 @@
     float: left;
 
     width: 400px;
-    min-height: inherit;
+
 
 }
 
@@ -20,8 +20,16 @@
 
     float: left;
 
-    padding: 10px;
+    padding: 0px 5px 5px 5px;
 
-    height: auto;
-    
+}
+
+#plottingCanvas {
+
+    border-width: 1px;
+
+    border-radius: 4px;
+
+    border: 1px solid #dddddd;
+
 }

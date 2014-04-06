@@ -3,7 +3,7 @@ var sw_config = {
     texture: 0,
     light: 0,
     reset_pos: 0,
-    bg_color: [0, 0, 0],
+    bg_color: [0.957, 0.957, 0.957],
     bg_color_a: 1,
     change: false,
     camera: [2, 2, 2]
@@ -127,16 +127,16 @@ var glbuffer = {
         var IMatrix = mat4.identity(mat4.create());
         gl.uniformMatrix4fv(glinfo.shaderProgram.vertexUniformMoveMatrix, false, IMatrix);
         gl.uniformMatrix4fv(glinfo.shaderProgram.vertexUniformRMatrix, false, IMatrix);
-        //        drawLineArrays(glbuffer.vertexBuffer_axis_x, gl.LINES, [1, 0.4, 0.5, 1]);
-        //        drawLineArrays(glbuffer.vertexBuffer_axis_y, gl.LINES, [0.1, 0.4, 0.7, 1]);
-        //        drawLineArrays(glbuffer.vertexBuffer_axis_z, gl.LINES, [0.6, 0.3, 0.5, 1]);
-        drawLineArrays(glbuffer.vertexBuffer_axis_x, gl.LINES, [1, 0, 0, 1]);
-        drawLineArrays(glbuffer.vertexBuffer_axis_y, gl.LINES, [0, 1, 0, 1]);
-        drawLineArrays(glbuffer.vertexBuffer_axis_z, gl.LINES, [0, 0, 1, 1]);
+        drawLineArrays(glbuffer.vertexBuffer_axis_x, gl.LINES, [1, 0.4, 0.5, 1]);
+        drawLineArrays(glbuffer.vertexBuffer_axis_y, gl.LINES, [0.1, 0.4, 0.7, 1]);
+        drawLineArrays(glbuffer.vertexBuffer_axis_z, gl.LINES, [0.6, 0.3, 0.5, 1]);
+//        drawLineArrays(glbuffer.vertexBuffer_axis_x, gl.LINES, [1, 0, 0, 1]);
+//        drawLineArrays(glbuffer.vertexBuffer_axis_y, gl.LINES, [0, 1, 0, 1]);
+//        drawLineArrays(glbuffer.vertexBuffer_axis_z, gl.LINES, [0, 0, 1, 1]);
     }
 
     function startup() {
-        var canvas = $("#canvas").get(0);
+        var canvas = $("#plottingCanvas").get(0);
         gl = initWebGLContext(canvas);
         initBuffer();
         glinfo.shaderProgram = initShader();
