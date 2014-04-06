@@ -9,121 +9,124 @@
         <script type="text/javascript" src="webgl-utils.js"></script>
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="main.css">
-        <!-- 底面线框 顶点着色器  -->
         <script id="vs" type="x-shader/x-vertex">
-            attribute vec3 aPos_bottom;
-            attribute vec4 aColor_bottom;
+            attribute vec3 aPos;
+            attribute vec3 aPos_normal;
+            attribute vec3 aColor;
             
             uniform mat4 uMVMatrix;
             uniform mat4 uPMatrix;
             uniform mat4 uRMatrix;
             uniform mat4 uMoveMatrix;
+            uniform vec3 uLightCo;
+            uniform vec3 uLightDi;
+            uniform vec3 uLightEn;
             
-            varying vec4 vColor_bottom;
+            varying vec3 vColor;
             
             void main(){
-                gl_Position = uPMatrix * uMVMatrix * uMoveMatrix * uRMatrix * vec4(aPos_bottom,1.0);
-                vColor_bottom = aColor_bottom;
-                
+                gl_Position = uPMatrix * uMVMatrix * uMoveMatrix * uRMatrix * vec4(aPos,1.0);
+                vec3 no_di = (uRMatrix * vec4(aPos_normal,0.0)).xyz;
+                float li_we = max(-dot(uLightDi,no_di),0.0);
+                vec3 li = li_we * uLightCo;
+                vColor = aColor * li + uLightEn;
             }
         </script>
         <!--底面线框 像素着色器-->
         <script id="fs" type="x-shader/x-fragment">
             precision mediump float;
             
-            varying vec4 vColor_bottom;
+            varying vec3 vColor;
             
             void main(){
-                gl_FragColor = vColor_bottom;
+                gl_FragColor = vec4(vColor,1.0);
             }
-        </script>
-        <script>
         </script>
     </head>
     
     <body onconTextmenu=window.event.returnValue=false>
-        <div id="main">
-            <div id="sider">
-                <div class="panel-group" id="accordion">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">图形选项</a>
-                            </h4>
+      <div id="main"> <div id="sider">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">图形选项</a>
+                        </h4>
+                    </div>
+                <div id="collapseOne" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <div
+                             >
+                            
+                            <label>
+                                背景颜色:
+                                <input type="text" id="color-picker" name="bg_color">
+                            </label>
+                            <label>
+                                背景透明:
+                                <input type="text" id="color-picker_a" name="bg_color_a">
+                            </label>
                         </div>
-                    <div id="collapseOne" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                            <div>
-                                <label>
-                                    背景颜色:
-                                    <input type="text" id="color-picker" name="bg_color">
-                                </label>
-                                <label>
-                                    背景透明:
-                                    <input type="text" id="color-picker_a" name="bg_color_a">
-                                </label>
-                            </div>
+                        <hr>
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-default">
+                            <input type="checkbox" name="switch" value="texture"> 开启材质
+                            </label>
+                            <label class="btn btn-default">
+                            <input type="checkbox" name="switch" value="light"> 开启灯光
+                            </label>
+                            <label class="btn btn-default">
+                            <input type="checkbox" name="switch" value="reset_pos"> 重置并锁定
+                            </label>
+                        </div>
+                        <hr>
+                        <div>
+                            <label>
+                                摄像机坐标:
+                                <input type="text" id="camera">
+                            </label>
                             <hr>
-                            <div class="btn-group" data-toggle="buttons">
-                                <label class="btn btn-default">
-                                <input type="checkbox" name="switch" value="texture"> 开启材质
-                                </label>
-                                <label class="btn btn-default">
-                                <input type="checkbox" name="switch" value="light"> 开启灯光
-                                </label>
-                                <label class="btn btn-default">
-                                <input type="checkbox" name="switch" value="reset_pos"> 重置并锁定
-                                </label>
-                            </div>
-                            <hr>
-                            <div>
-                                <label>
-                                    摄像机坐标:
-                                    <input type="text" id="camera">
-                                </label>
-                                <hr>
-                                <button type="button" id="camera_left" class="btn btn-default">向左旋转</button>
-                                <button type="button" id="camera_right" class="btn btn-default">向右旋转</button>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                                动画选项
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseTwo" class="panel-collapse collapse">
-                            <div class="panel-body">
-                            Anim pariatur cliche reprehenderit
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                                配置选项
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            Anim pariatur cliche reprehenderit
-                          </div>
+                            <button type="button" id="camera_left" class="btn btn-default">向左旋转</button>
+                            <button type="button" id="camera_right" class="btn btn-default">向右旋转</button>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="center">
-                <canvas id="plottingCanvas"  height="500px" width="500px">
-                </canvas>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-title">
+                        <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                            动画选项
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">
+                        Anim pariatur cliche reprehenderit
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-title">
+                        <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                            配置选项
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        Anim pariatur cliche reprehenderit
+                      </div>
+                    </div>
+                </div>
             </div>
         </div>
-     <script> 
+        <div id="center">
+            <canvas id="plottingCanvas"  height="500px" width="500px">
+            </canvas>
+        </div></div>
+        <script> 
             window.onload=window.onresize=function(){
                     plottingCanvas.width = main.clientWidth-420;
                     plottingCanvas.height = $(window).height()-20;
